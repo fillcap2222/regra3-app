@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
+
+<title>Calculadora de Regra de 3</title>
+
+<link rel="manifest" href="manifest.json">
+
+<style>
+
+body{
+    font-family: Arial, sans-serif;
+    background:#f2f2f2;
+    margin:0;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
+
+.container{
+    background:white;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 0 12px rgba(0,0,0,0.15);
+    text-align:center;
+    width:90%;
+    max-width:420px;
+}
+
+h2{
+    margin-top:0;
+}
+
+.linha{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:12px;
+    margin:14px 0;
+    flex-wrap:wrap;
+}
+
+.texto{
+    font-size:18px;
+}
+
+.assimcomo{
+    margin:12px 0;
+    font-style:italic;
+    color:#555;
+    font-size:18px;
+}
+
+input{
+    width:90px;
+    padding:12px;
+    font-size:18px;
+    text-align:center;
+    border-radius:6px;
+    border:1px solid #ccc;
+}
+
+.resultado{
+    width:90px;
+    padding:12px;
+    background:#eee;
+    border-radius:6px;
+    font-size:18px;
+    font-weight:bold;
+}
+
+@media (max-width:400px){
+
+input{
+width:70px;
+font-size:16px;
+}
+
+.resultado{
+width:70px;
+font-size:16px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Regra de 3</h2>
+
+<div class="linha">
+<input id="a" type="text" placeholder="A">
+<span class="texto">está para</span>
+<input id="b" type="text" placeholder="B">
+</div>
+
+<div class="assimcomo">
+assim como
+</div>
+
+<div class="linha">
+<input id="c" type="text" placeholder="C">
+<span class="texto">está para</span>
+<div class="resultado" id="resultado">X</div>
+</div>
+
+</div>
+
+<script>
+
+const campos = ["a","b","c"];
+
+campos.forEach(id=>{
+document.getElementById(id).addEventListener("input",calcular);
+});
+
+function normalizar(valor){
+if(!valor) return NaN;
+return parseFloat(valor.replace(",","."));
+}
+
+function formatarNumero(num){
+let arredondado = Number(num.toFixed(6));
+return arredondado.toString();
+}
+
+function calcular(){
+
+let a = normalizar(document.getElementById("a").value);
+let b = normalizar(document.getElementById("b").value);
+let c = normalizar(document.getElementById("c").value);
+
+if(isNaN(a) || isNaN(b) || isNaN(c) || a === 0){
+document.getElementById("resultado").innerText = "X";
+return;
+}
+
+let x = (b * c) / a;
+
+document.getElementById("resultado").innerText = formatarNumero(x);
+
+}
+
+</script>
+
+<script>
+if ('serviceWorker' in navigator) {
+navigator.serviceWorker.register('/regra3/sw.js', { scope: '/regra3/' });
+}
+</script>
+
+</body>
+</html>
