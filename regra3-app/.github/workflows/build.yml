@@ -1,0 +1,22 @@
+name: Build APK
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Create WebView App
+        run: |
+          mkdir app
+          echo "placeholder"
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v3
+        with:
+          name: regra3-apk
+          path: .
